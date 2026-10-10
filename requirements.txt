@@ -1,0 +1,37 @@
+# NOKOV Hand base environment (Python 3.11, Windows)
+# Install from the project root with:
+#   D:\venvs\nokov_hand\Scripts\python.exe -m pip install -r requirements.txt
+
+# Vendor motion-capture SDK
+./vendor/nokovpy-3.0.1-py3-none-any.whl
+
+# BrainCo REVO2 SDK
+bc-stark-sdk>=2.0,<3
+
+# PyTorch for the Intel Arc GPU (XPU build)
+--extra-index-url https://download.pytorch.org/whl/xpu
+torch==2.14.0+xpu
+
+# Numerical computing and tabular data
+numpy>=1.26,<3
+pandas>=2.2,<4
+scipy>=1.13,<2
+openpyxl>=3.1,<4
+
+# Classical machine learning
+scikit-learn>=1.5,<2
+joblib>=1.4,<2
+
+# Plotting and experiment inspection
+matplotlib>=3.8,<4
+seaborn>=0.13,<1
+
+# Configuration and utilities
+PyYAML>=6,<7
+tqdm>=4.66,<5
+
+# PyCharm/Jupyter kernel and tests
+ipykernel>=6.29,<8
+pytest>=8,<10
+
+# OpenCV is deferred until a camera-image processing task actually requires it.

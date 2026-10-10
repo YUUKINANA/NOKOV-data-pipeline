@@ -1,0 +1,60 @@
+# Python caches and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE and notebook state
+.idea/
+.vscode/
+.ipynb_checkpoints/
+
+# Generated motion-capture data and trained artifacts. Recursive rules also
+# cover future label folders such as data/raw/ok/mocap_*/.
+data/raw/**
+data/processed/**
+models/*
+!models/.gitkeep
+
+# Large media and exported demos should live on NAS, not in GitHub.
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv
+
+# Archives and vendor installers should live on NAS.
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.exe
+*.msi
+
+# Local logs and temporary files
+*.log
+*.tmp
+~$*
+
+# Proprietary/local vendor binaries
+vendor/**
+vendor/*.whl
+vendor/*.dll
+vendor/*.pyd
+vendor/*.so
+License/
+license/
+SDK/
+
+# Local licenses, credentials, and secrets
+*.lic
+*.license
+*.key
+*.pem
+*.pfx
+*.p12
+.env
+.env.*
+credentials.*
+secrets.*
