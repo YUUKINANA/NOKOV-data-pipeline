@@ -4,6 +4,8 @@
 `bc-stark-sdk` 跑通最小控制：把 6 个 `0..1000` 的位置控制量发送到
 REVO2，再逐步接入 NOKOV/XINGYING 动捕处理结果。
 
+下面命令中的 `D:\Projects\nokov_hand` 和 `D:\venvs\nokov_hand` 是本机已验证的推荐路径；如果项目或虚拟环境放在其他位置，请同步替换命令中的路径。
+
 ## 当前状态
 
 已在 Windows 上验证：

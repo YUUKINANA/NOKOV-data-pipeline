@@ -2,6 +2,8 @@
 
 本文说明如何使用 NOKOV/XINGYING 实时动捕数据驱动 REVO2 灵巧手。
 
+下面命令中的 `D:\Projects\nokov_hand` 和 `D:\venvs\nokov_hand` 是本机已验证的推荐路径；如果项目或虚拟环境放在其他位置，请同步替换命令中的路径。
+
 ## 1. 实时数据流
 
 ```text

@@ -1,10 +1,16 @@
 # Windows 环境配置
 
-本文说明如何在 Windows 工作站上复现本项目的 Python 开发环境。项目主目录为：
+本文说明如何在 Windows 工作站上复现本项目的 Python 开发环境。
+
+本文中的路径是本机已验证的推荐路径，不是程序硬编码要求。为减少修改命令的成本，建议新机器尽量沿用：
 
 ```text
 D:\Projects\nokov_hand
 ```
+
+如果你把项目放到其他位置，需要把本文命令中的 `D:\Projects\nokov_hand`、`D:\venvs\nokov_hand` 等路径同步替换为自己的路径。
+
+厂商软件、SDK、License、培训视频和示例资料不随 GitHub 上传，请先从 NAS 获取，详见 [`external_assets.md`](external_assets.md)。
 
 ## 1. Python 环境
 
@@ -40,13 +46,13 @@ D:\venvs\nokov_hand\Scripts\python.exe -m pip install -r requirements-lock.txt
 
 项目依赖厂商提供的 Python SDK。GitHub 仓库不包含厂商 wheel、DLL、安装包或 License。
 
-当前本机资料路径：
+统一从 NAS 获取：
 
 ```text
-D:\GPTwork\hand_mocap\XING_Python_SDK-4.1.0.5645
+/0-全体共享文件夹/2-仪器设备/度量光学三维动作捕捉系统
 ```
 
-建议将 SDK wheel 从 NAS 或厂商资料复制到：
+在 NAS 的 `SDK`、`Python`、`Windows` 或 `XINGYING SDK` 相关目录中找到 Python wheel，例如 `nokovpy-3.0.1-py3-none-any.whl`。建议复制到本机：
 
 ```text
 D:\Projects\nokov_hand\vendor\nokovpy-3.0.1-py3-none-any.whl

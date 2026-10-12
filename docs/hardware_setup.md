@@ -14,6 +14,14 @@
 - USB-RS485 转接器；
 - XINGYING 软件与 License/加密狗。
 
+XINGYING 软件、License、SDK、操作手册和培训视频不随 GitHub 仓库上传，统一从 NAS 获取：
+
+```text
+/0-全体共享文件夹/2-仪器设备/度量光学三维动作捕捉系统
+```
+
+具体清单见 [`external_assets.md`](external_assets.md)。
+
 ## 2. 动捕系统启动
 
 1. 连接相机阵列与交换机。
