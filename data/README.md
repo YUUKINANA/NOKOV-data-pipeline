@@ -209,12 +209,14 @@ skeletons
 
 ## Pandas读取示例
 
+下面的路径只是示例。实际使用时，把 `session_dir` 改成你自己的某一次采集目录即可，例如项目下的 `data/raw/mocap_YYYYMMDD_HHMMSS`。
+
 ```python
 from pathlib import Path
 
 import pandas as pd
 
-session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_20260903_135001")
+session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_YYYYMMDD_HHMMSS")
 
 # 默认采集会生成 .gz；pandas 可以直接读取。
 frames = pd.read_csv(str(session_dir / "frames.csv.gz"))
@@ -238,7 +240,7 @@ from pathlib import Path
 
 import pandas as pd
 
-session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_20260903_135001")
+session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_YYYYMMDD_HHMMSS")
 
 # pandas 可以直接读取 .gz；如果你用了 --no-compress-on-finish，把 .gz 去掉即可。
 frames = pd.read_csv(str(session_dir / "frames.csv.gz"))
@@ -252,7 +254,7 @@ from pathlib import Path
 
 import pandas as pd
 
-session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_20260903_135001")
+session_dir: Path = Path(r"D:\Projects\nokov_hand\data\raw\mocap_YYYYMMDD_HHMMSS")
 raw_frames = pd.read_json(str(session_dir / "raw.jsonl"), lines=True)
 print(raw_frames.columns)
 ```

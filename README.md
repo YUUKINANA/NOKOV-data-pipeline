@@ -12,6 +12,8 @@ XINGYING/NOKOV 光学动作捕捉系统
 
 项目面向实验室导师和同学复现。GitHub 仓库只保存代码、文档和小型配置文件；厂商软件、SDK压缩包、License、实验原始数据、模型文件和演示视频放在 NAS 附件资料中。
 
+> 路径说明：本文档中的 `D:\Projects\nokov_hand`、`D:\venvs\nokov_hand`、`D:\ros2_jazzy` 是本机已验证的推荐路径/示例路径，不是程序硬编码要求。换电脑复现时，建议尽量沿用这些路径；如果改到其他位置，只需要把命令中的路径同步替换即可。
+
 ## 项目阶段定位
 
 1. **动捕驱动灵巧手实时复现**：使用 XINGYING/NOKOV 采集手部反光点，通过几何算法和安全输出层驱动 REVO2 灵巧手复现人的手部动作。
@@ -23,6 +25,7 @@ XINGYING/NOKOV 光学动作捕捉系统
 ## 文档索引
 
 - [Windows 环境配置](docs/setup_windows.md)
+- [外部资料与 NAS 获取清单](docs/external_assets.md)
 - [硬件与 XINGYING 启动流程](docs/hardware_setup.md)
 - [动捕采集、处理与可视化流程](docs/mocap_pipeline.md)
 - [REVO2 控制说明](docs/revo2_control.md)
@@ -59,10 +62,10 @@ XINGYING/NOKOV 光学动作捕捉系统
 
 ## 软件环境
 
-- 项目目录：`D:\Projects\nokov_hand`
-- 普通Python/机器学习环境：`D:\venvs\nokov_hand`
-- ROS 2 Jazzy/Pixi环境：`D:\ros2_jazzy`
-- XINGYING SDK原始资料：`D:\GPTwork\hand_mocap\XING_Python_SDK-4.1.0.5645`
+- 项目目录示例：`D:\Projects\nokov_hand`
+- 普通Python/机器学习环境示例：`D:\venvs\nokov_hand`
+- ROS 2 Jazzy/Pixi环境示例：`D:\ros2_jazzy`
+- 外部厂商资料统一从 NAS 获取，详见 [`docs/external_assets.md`](docs/external_assets.md)
 - 默认XINGYING SDK服务地址：`10.1.1.198`
 
 普通安装使用核心依赖文件：
@@ -464,4 +467,4 @@ D:\venvs\nokov_hand\Scripts\python.exe -m ml.replay_hand_motion
 
 ## 迁移与备份说明
 
-旧目录 `D:\GPTwork\hand_mocap` 当前仅作为备份和厂商SDK资料存放处。正式代码和后续实验数据均以 `D:\Projects\nokov_hand` 为准。旧目录暂不删除。
+正式代码和后续实验数据均以 `D:\Projects\nokov_hand` 为准。早期开发机上的旧目录只作为历史备份，不作为复现依据；换电脑复现时，厂商软件、SDK、License 和培训资料统一按 [`docs/external_assets.md`](docs/external_assets.md) 从 NAS 获取。
