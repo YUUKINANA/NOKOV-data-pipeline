@@ -32,6 +32,7 @@ XINGYING/NOKOV 光学动作捕捉系统
 - [实时复现链路](docs/live_control.md)
 - [无硬件 24点合成闭环](docs/synthetic_hand_pipeline.md)
 - [机器学习路线规划](docs/ml_plan.md)
+- [机器学习训练方案与代码审查](docs/ml_training_design_review.md)
 - [GitHub 与 NAS 发布清单](docs/github_nas_publish.md)
 - [开发进度记录](docs/progress_log.md)
 - [数据字段说明](data/README.md)
