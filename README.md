@@ -159,6 +159,8 @@ data/raw/mocap_YYYYMMDD_HHMMSS/
 └─ skeleton_descriptions.json.gz
 ```
 
+`skeleton_segments.csv.gz` 只记录位姿有效的骨骼段：如果 XINGYING 为场景中未出现的实例输出 `9999999` 等无效位置或四元数，采集脚本会跳过对应占位行。`frames.csv.gz` 仍记录每一帧，`skeleton_descriptions.json.gz` 仍保留模板及骨段层级，因此缺少骨骼段行不等于丢失整帧。已录制的旧数据不会被改写；手部处理脚本读取时会过滤其中的无效占位行。详细规则见 [数据字段说明](data/README.md#skeleton_segmentscsv)。
+
 调试 SDK 数据结构时可以使用 `--save-mode full`，不压缩时文件结构是：
 
 ```text
@@ -201,6 +203,8 @@ D:\venvs\nokov_hand\Scripts\python.exe -m ml.process_hand_sessions `
 - `skeleton_segment_angles.csv`：如果原始数据包含 XINGYING skeleton，列出相邻骨段的相对姿态角，供后续映射到6维控制量。
 - `summary.json`：帧数、有效帧、缺失点统计和每个通道的范围。
 - `marker_layout.csv`：当前使用的24个点号语义。
+
+如原始数据包含 skeleton，`summary.json` 中的 `invalid_skeleton_rows_skipped` 表示处理时跳过的无效骨骼段行数。新采集通常已在写入前过滤；这个计数主要用于检查旧采集。`--save-mode full` 保存的 `raw.jsonl` 仍是未经该过滤的 SDK 快照，可能包含占位值。
 
 目前这6维信号仍是几何估计结果，不是REVO2的最终电机指令。等灵巧手通信协议和实物确认后，还需要再做一次从 `0-1控制量` 到 `实际关节/电机命令` 的映射。
 
