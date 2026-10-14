@@ -279,6 +279,13 @@ class SessionRecorder:
                 for segment in skeleton["segments"]:
                     x, y, z = segment["position_mm"]
                     qx, qy, qz, qw = segment["orientation_xyzw"]
+                    # XINGYING can stream an absent template's segments with
+                    # 9999999 coordinates on every frame. Keep the template
+                    # description and frame clock, but omit these empty rows.
+                    if not point_is_valid([x, y, z]) or not point_is_valid(
+                        [qx, qy, qz, qw]
+                    ):
+                        continue
                     self._skeletons.writerow(
                         {
                             **common,

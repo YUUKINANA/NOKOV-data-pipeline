@@ -152,6 +152,8 @@ CSV文件使用带BOM的UTF-8编码，通常可以直接使用Excel打开。数�
 | `params` | 位字段/整数 | SDK提供的segment状态参数 |
 | `marker_ids` | — | 该segment关联的marker ID列表，用分号分隔 |
 
+新录制会跳过位置或四元数为 `9999999` 等无效值的骨骼段，因此未出现在场景中的模板不会逐帧写入占位行。`frames.csv` 仍保留每个源帧，`skeleton_descriptions.json` 仍保留模板名称与层级；某帧缺少一个预期的骨骼段即表示该段没有有效位姿。不要仅凭 `marker_count` 判断有效性：未出现的模板也可能报告非零关联点数。旧录制中的无效占位行不会被修改，但手部处理程序在计算骨骼角度前会过滤它们。
+
 如果该文件存在，`ml/process_hand_sessions.py` 会额外生成：
 
 - `skeleton_segment_summary.csv`：每个segment的名称、父级ID和出现帧数。

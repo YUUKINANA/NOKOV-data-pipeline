@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import gzip
 import sys
 from pathlib import Path
@@ -123,3 +124,70 @@ def test_hand_mode_can_compress_saved_csv_files(tmp_path: Path) -> None:
         skeleton_rows = stream.read().splitlines()
     assert len(skeleton_rows) == 2
     assert "101" in skeleton_rows[1]
+
+
+def test_absent_skeleton_segments_are_not_recorded(tmp_path: Path) -> None:
+    descriptions = {
+        "skeletons": [
+            {"id": 0, "name": "l-hand"},
+            {"id": 1, "name": "r-hand"},
+        ]
+    }
+    recorder = SessionRecorder(
+        tmp_path,
+        save_mode="hand",
+        compress_on_finish=False,
+        data_descriptions=descriptions,
+    )
+    invalid = {
+        "index": 0,
+        "id": 101,
+        "position_mm": [9_999_999.0] * 3,
+        "orientation_xyzw": [9_999_999.0] * 3 + [1.0],
+        "marker_count": 3,  # An absent template can still report marker IDs.
+        "marker_ids": [1, 2, 3],
+        "mean_error": 0.0,
+        "params": 0,
+    }
+    valid = {
+        **invalid,
+        "position_mm": [1.0, 2.0, 3.0],
+        "orientation_xyzw": [0.0, 0.0, 0.0, 1.0],
+    }
+    snapshot = {
+        "frame": 100,
+        "timestamp_ms": 1_000,
+        "latency": 1.0,
+        "counts": {
+            "marker_sets": 2,
+            "labeled_markers": 0,
+            "unidentified_markers": 0,
+            "rigid_bodies": 0,
+            "skeletons": 2,
+            "analog_channels": 0,
+        },
+        "marker_sets": [],
+        "labeled_markers": [],
+        "unidentified_markers": [],
+        "rigid_bodies": [],
+        "skeletons": [
+            {"id": 0, "segments": [invalid]},
+            {"id": 1, "segments": [valid]},
+        ],
+    }
+
+    recorder.write(snapshot, sample_index=1)
+    recorder.close()
+
+    with recorder.paths["frames"].open(encoding="utf-8-sig", newline="") as stream:
+        frames = list(csv.DictReader(stream))
+    with recorder.paths["skeleton_segments"].open(
+        encoding="utf-8-sig", newline=""
+    ) as stream:
+        segments = list(csv.DictReader(stream))
+
+    assert len(frames) == 1
+    assert frames[0]["skeletons"] == "2"
+    assert len(segments) == 1
+    assert segments[0]["skeleton_id"] == "1"
+    assert recorder.paths["skeleton_descriptions"].exists()

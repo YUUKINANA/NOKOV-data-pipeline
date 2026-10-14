@@ -31,6 +31,7 @@ from ml.hand_control_filter import StableHandControlFilter  # noqa: E402
 
 RAW_ROOT = PROJECT_ROOT / "data" / "raw"
 PROCESSED_ROOT = PROJECT_ROOT / "data" / "processed"
+LOST_MARKER_VALUE = 9_999_999.0
 
 ANGLE_FIELDS = [
     "sample_index",
@@ -153,6 +154,21 @@ def _quaternion_angle_deg(first: np.ndarray, second: np.ndarray) -> float:
     return math.degrees(2.0 * math.acos(dot))
 
 
+def _valid_skeleton_pose(row: dict[str, str]) -> bool:
+    """Reject absent XINGYING templates before computing segment angles."""
+    try:
+        values = (
+            float(row[key])
+            for key in ("x_mm", "y_mm", "z_mm", "qx", "qy", "qz", "qw")
+        )
+        return all(
+            math.isfinite(value) and abs(value) < LOST_MARKER_VALUE
+            for value in values
+        )
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
 def _skeleton_segment_metadata(session: Path) -> dict[tuple[int, int], dict[str, object]]:
     try:
         descriptions_path = existing_text_path(session / "skeleton_descriptions.json")
@@ -186,11 +202,14 @@ def process_skeleton_session(session: Path, processed_dir: Path) -> dict[str, ob
     rows: list[dict[str, str]] = []
     with open_text_auto(skeleton_csv) as stream:
         rows = list(csv.DictReader(stream))
+    raw_row_count = len(rows)
+    rows = [row for row in rows if _valid_skeleton_pose(row)]
     if not rows:
         return {
             "skeleton_available": True,
             "skeleton_rows": 0,
-            "reason": "skeleton_segments.csv is empty",
+            "invalid_skeleton_rows_skipped": raw_row_count,
+            "reason": "skeleton_segments.csv has no valid segment poses",
         }
 
     by_frame: dict[tuple[int, int], dict[int, dict[str, str]]] = {}
@@ -275,6 +294,7 @@ def process_skeleton_session(session: Path, processed_dir: Path) -> dict[str, ob
     return {
         "skeleton_available": True,
         "skeleton_rows": len(rows),
+        "invalid_skeleton_rows_skipped": raw_row_count - len(rows),
         "skeleton_frames": len(by_frame),
         "skeleton_segments": len(segment_counts),
         "has_descriptions": bool(metadata),

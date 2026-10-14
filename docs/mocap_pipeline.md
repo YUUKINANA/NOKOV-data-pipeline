@@ -44,6 +44,8 @@ data/raw/mocap_YYYYMMDD_HHMMSS/
 
 字段说明见 [../data/README.md](../data/README.md)。
 
+采集器会保留每帧时间戳和模板描述，但不逐帧保存未出现实例的无效骨骼占位行；第一次调试新的全身模板时，可短暂增加 `--save-mode full` 检查完整 SDK 输出。`full` 模式的 `raw.jsonl` 仍保留原始 SDK 快照，因此文件会更大，且其中可能包含无效模板数据。
+
 ## 3. 处理手部数据
 
 处理最新 5段：
